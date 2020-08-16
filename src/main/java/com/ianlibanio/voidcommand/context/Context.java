@@ -21,33 +21,4 @@ public class Context {
     // Add-ons
     Player player;
 
-    // Methods
-    public void message(String message) {
-        sender.sendMessage(message);
-    }
-
-    public void message(BaseComponent... message) {
-        sender.sendMessage(message);
-    }
-
-    public void hexMessage(BaseComponent... message) {
-        sender.spigot().sendMessage(message);
-    }
-
-    public boolean hasPermission(CommandSender sender, String permission) {
-        return permission == null || permission.equals("") || sender.hasPermission(permission);
-    }
-
-    public void addItems(ItemStack... itemStack) {
-        player.getInventory().addItem(itemStack);
-    }
-
-    public boolean isPlayer() {
-        return sender instanceof Player;
-    }
-
-    public boolean isConsole() {
-        return !isPlayer();
-    }
-
 }
