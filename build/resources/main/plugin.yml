@@ -1,0 +1,6 @@
+name: VoidPlugin
+version: '1.0'
+main: com.ianlibanio.voidcommand.VoidPlugin
+api-version: 1.16
+authors: [zMrNull]
+description: Just a basic Command API.
