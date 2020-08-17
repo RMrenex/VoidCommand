@@ -6,7 +6,7 @@ import com.ianlibanio.voidcommand.data.Sub;
 
 import java.util.Map;
 
-public class SubCommandController implements IMapController<String, Sub> {
+public class ValidSubCommandsController implements IMapController<String, Sub> {
 
     private final Map<String, Sub> subCommandMethodMap = Maps.newHashMap();
 
@@ -24,4 +24,5 @@ public class SubCommandController implements IMapController<String, Sub> {
     public Map<String, Sub> get() {
         return subCommandMethodMap;
     }
+
 }

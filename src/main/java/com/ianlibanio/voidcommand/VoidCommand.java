@@ -7,6 +7,8 @@ import com.ianlibanio.voidcommand.annotation.subcommand.SubCommand;
 import com.ianlibanio.voidcommand.context.Context;
 import com.ianlibanio.voidcommand.controller.IMapController;
 import com.ianlibanio.voidcommand.controller.impl.SubCommandController;
+import com.ianlibanio.voidcommand.controller.impl.ValidSubCommandsController;
+import com.ianlibanio.voidcommand.data.Sub;
 import com.ianlibanio.voidcommand.settings.Executor;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -24,7 +26,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class VoidCommand extends org.bukkit.command.Command {
 
-    private final IMapController<SubCommand, Method> controller = new SubCommandController();
+    private final IMapController<String, Sub> controller = new SubCommandController();
+    private final IMapController<String, Sub> validController = new ValidSubCommandsController();
 
     private Player player;
     private Command command;
@@ -40,6 +43,7 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             if (command != null) {
                 this.command = command;
                 setName(command.name());
+                System.out.println(command.name());
             }
 
             if (aliases != null) setAliases(Arrays.asList(aliases.value()));
@@ -48,7 +52,7 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             val subAnnotation = method.getAnnotation(SubCommand.class);
 
             if ((command == null && aliases == null) && subAnnotation != null) {
-                controller.put(subAnnotation, method);
+                controller.put(subAnnotation.name(), new Sub(subAnnotation, method));
             }
         }
     }
@@ -78,13 +82,11 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
         AtomicBoolean use = new AtomicBoolean(true);
 
         if (args.length > 0) {
-            controller.clear();
-
-            controller.get().forEach((subCommand, method) -> {
-                val parameters = method.getParameterTypes();
+            controller.get().forEach((name, sub) -> {
+                val parameters = sub.getMethod().getParameterTypes();
 
                 if (parameters.length >= 1 && parameters[0].isAssignableFrom(Context.class)) {
-                    val split = subCommand.name().split("\\.");
+                    val split = name.split("\\.");
 
                     if (split.length == 0 || args[0].equals("") || args.length < split.length) {
                         use.set(false);
@@ -98,28 +100,30 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
                         }
                     }
 
-                    if (hasPermission(sender, command.permission()) && hasPermission(sender, subCommand.permission())) {
-                        controller.put(subCommand, method);
+                    if (hasPermission(sender, command.permission()) && hasPermission(sender, sub.getSubCommand().permission())) {
+                        validController.put(name, sub);
                     }
                 }
             });
 
-            if (controller.get().size() == 1) {
-                controller.get().forEach((subCommand, method) -> invoke(method, sender, label, args));
+            Map<String, Sub> valid = validController.get();
+
+            if (valid.size() == 1) {
+                valid.values().forEach(sub -> invoke(sub.getMethod(), sender, label, args));
+                use.set(false);
             }
 
-            if (controller.get().size() > 1) {
-                AtomicReference<Map.Entry<SubCommand, Method>> max = new AtomicReference<>(null);
+            if (valid.size() > 1) {
+                AtomicReference<Map.Entry<String, Sub>> max = new AtomicReference<>(null);
 
-                controller.get().forEach((subCommand, method) -> {
-                    if (max.get() == null || subCommand.name().split("\\.").length > max.get().getKey().name().split("\\.").length)
-                        max.set(Maps.immutableEntry(subCommand, method));
+                valid.forEach((name, sub) -> {
+                    if (max.get() == null || name.split("\\.").length > max.get().getKey().split("\\.").length)
+                        max.set(Maps.immutableEntry(name, sub));
                 });
 
-                invoke(max.get().getValue(), sender, label, args);
+                invoke(max.get().getValue().getMethod(), sender, label, args);
+                use.set(false);
             }
-
-            use.set(false);
         }
 
         val execute = use.get();
@@ -127,9 +131,11 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
         if (execute) {
             command(new Context(sender, label, args, player));
         }
-        if (!execute && controller.get().equals(Collections.emptyMap())) {
+        if (!execute && validController.get().equals(Collections.emptyMap())) {
             sender.sendMessage(ChatColor.RED + command.invalid());
         }
+
+        validController.clear();
 
         return false;
     }
