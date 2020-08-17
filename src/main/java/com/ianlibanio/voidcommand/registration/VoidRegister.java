@@ -26,12 +26,6 @@ public class VoidRegister {
 
         for (VoidCommand command : commands) {
             commandMap.register(plugin.getName(), command);
-
-            String aliases = !command.getAliases().equals(Collections.emptyList()) ? "(Aliases: " + ChatColor.YELLOW + StringUtils.join(command.getAliases(), ChatColor.GRAY + ", "
-                    + ChatColor.YELLOW) + ChatColor.GRAY + ") " : "";
-
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + "[" + ChatColor.YELLOW + "VoidCommand" + ChatColor.GRAY + "] -> The command '" + ChatColor.YELLOW
-                    + command.getName() + ChatColor.GRAY + "' " + aliases + "was registered with success.");
         }
     }
 
