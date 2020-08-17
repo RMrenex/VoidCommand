@@ -15,7 +15,7 @@ import java.util.Collections;
 @AllArgsConstructor
 public class VoidRegister {
 
-    Plugin plugin;
+    private final Plugin plugin;
 
     @SneakyThrows
     public void add(VoidCommand... commands)  {
