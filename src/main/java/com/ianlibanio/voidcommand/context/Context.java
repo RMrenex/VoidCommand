@@ -3,10 +3,8 @@ package com.ianlibanio.voidcommand.context;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 @Getter
 @AllArgsConstructor
@@ -14,11 +12,11 @@ import org.bukkit.inventory.ItemStack;
 public class Context {
 
     // Default
-    CommandSender sender;
-    String label;
-    String[] args;
+    private final CommandSender sender;
+    private final String label;
+    private final String[] args;
 
     // Add-ons
-    Player player;
+    private final Player player;
 
 }
