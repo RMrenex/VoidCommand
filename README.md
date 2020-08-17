@@ -1,4 +1,7 @@
 # Void Command
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c13a76aaeff4852ac651eddd0b56dfb)](https://app.codacy.com/manual/ianlibanio/VoidCommand?utm_source=github.com&utm_medium=referral&utm_content=ianlibanio/VoidCommand&utm_campaign=Badge_Grade_Dashboard)
+
 > Void Command is a basic Spigot API used for easily creating commands and sub commands.
 
 ![Codacy coverage](https://img.shields.io/codacy/coverage/djawidjwaidjwaidjwaoi?color=blue&label=CODE%20REVIEW&style=for-the-badge)
