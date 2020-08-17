@@ -1,7 +1,5 @@
 # Void Command
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c13a76aaeff4852ac651eddd0b56dfb)](https://app.codacy.com/manual/ianlibanio/VoidCommand?utm_source=github.com&utm_medium=referral&utm_content=ianlibanio/VoidCommand&utm_campaign=Badge_Grade_Dashboard)
-
 > Void Command is a basic Spigot API used for easily creating commands and sub commands.
 
 Void Command is an API using Spigot, for Minecraft that facilitates the creation and registration of new commands and sub commands. You can easily add it to your project, and follow the guide to create new commands.
