@@ -23,9 +23,9 @@ repositories {
 ```
 Add the `dependency`:
 ```gradle
-	dependencies {
-		implementation 'com.github.ianlibanio:VoidCommand:0.1'
-	}
+dependencies {
+	implementation 'com.github.ianlibanio:VoidCommand:0.1'
+}
 ```
 
 ### Maven
