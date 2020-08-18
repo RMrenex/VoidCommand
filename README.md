@@ -24,7 +24,7 @@ repositories {
 Add the `dependency`:
 ```gradle
 dependencies {
-	implementation 'com.github.ianlibanio:VoidCommand:0.1'
+	implementation 'com.github.ianlibanio:VoidCommand:1.0'
 }
 ```
 
@@ -41,9 +41,9 @@ Add the JitPack repository to your `build` file:
 Add the `dependency`:
 ```xml
 <dependency>
-	<groupId>com.github.User</groupId>
-	<artifactId>Repo</artifactId>
-	<version>Tag</version>
+	<groupId>com.github.ianlibanio</groupId>
+	<artifactId>VoidCommand</artifactId>
+	<version>1.0</version>
 </dependency>
 ```
 
