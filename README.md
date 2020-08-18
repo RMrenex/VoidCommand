@@ -43,7 +43,7 @@ Add the `dependency`:
 <dependency>
 	<groupId>com.github.User</groupId>
 	<artifactId>Repo</artifactId>
-	version>Tag</version>
+	<version>Tag</version>
 </dependency>
 ```
 
