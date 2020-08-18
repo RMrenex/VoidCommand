@@ -5,9 +5,9 @@ import com.ianlibanio.voidcommand.annotation.command.Aliases;
 import com.ianlibanio.voidcommand.annotation.command.Command;
 import com.ianlibanio.voidcommand.annotation.subcommand.SubCommand;
 import com.ianlibanio.voidcommand.context.Context;
-import com.ianlibanio.voidcommand.controller.IMapController;
-import com.ianlibanio.voidcommand.controller.impl.SubCommandController;
-import com.ianlibanio.voidcommand.controller.impl.ValidSubCommandsController;
+import com.ianlibanio.voidcommand.controller.ISubCommandController;
+import com.ianlibanio.voidcommand.controller.impl.SubCommandControllerImpl;
+import com.ianlibanio.voidcommand.controller.impl.ValidSubCommandCommandImpl;
 import com.ianlibanio.voidcommand.data.Sub;
 import com.ianlibanio.voidcommand.settings.Executor;
 import lombok.SneakyThrows;
@@ -26,8 +26,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class VoidCommand extends org.bukkit.command.Command {
 
-    private final IMapController<String, Sub> controller = new SubCommandController();
-    private final IMapController<String, Sub> validController = new ValidSubCommandsController();
+    private final ISubCommandController<String, Sub> controller = new SubCommandControllerImpl();
+    private final ISubCommandController<String, Sub> validController = new ValidSubCommandCommandImpl();
 
     private Player player;
     private Command command;
@@ -76,6 +76,7 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             sender.sendMessage(ChatColor.GRAY + "You don't have the permission '" + ChatColor.RED + command.permission() + ChatColor.GRAY + "' to use this command!");
             return true;
         }
+
         if (isPlayer(sender)) this.player = (Player) sender;
 
         AtomicBoolean use = new AtomicBoolean(true);
@@ -108,7 +109,7 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             Map<String, Sub> valid = validController.get();
 
             if (valid.size() == 1) {
-                valid.values().forEach(sub -> invoke(sub.getMethod(), sender, label, args));
+                valid.values().forEach(sub -> invoke(sub.getMethod(), sub.getSubCommand().executor(), sender, label, args));
                 use.set(false);
             }
 
@@ -120,7 +121,9 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
                         max.set(Maps.immutableEntry(name, sub));
                 });
 
-                invoke(max.get().getValue().getMethod(), sender, label, args);
+                val sub = max.get().getValue();
+
+                invoke(sub.getMethod(), sub.getSubCommand().executor(), sender, label, args);
                 use.set(false);
             }
         }
@@ -135,7 +138,6 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
         }
 
         validController.clear();
-
         return false;
     }
 
@@ -148,7 +150,17 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
     }
 
     @SneakyThrows
-    private void invoke(Method method, CommandSender sender, String label, String[] args) {
+    private void invoke(Method method, Executor executor, CommandSender sender, String label, String[] args) {
+        if (executor.equals(Executor.PLAYER_ONLY) && !isPlayer(sender)) {
+            sender.sendMessage(ChatColor.GRAY + "You can't use this command in the " + ChatColor.RED + "CONSOLE" + ChatColor.GRAY + ".");
+            return;
+        }
+
+        if (executor.equals(Executor.CONSOLE_ONLY) && isPlayer(sender)) {
+            sender.sendMessage(ChatColor.GRAY + "You can't use this command as a " + ChatColor.RED + "PLAYER" + ChatColor.GRAY + ".");
+            return;
+        }
+
         method.invoke(this, new Context(sender, label, args, player));
     }
 }
