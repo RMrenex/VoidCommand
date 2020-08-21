@@ -1,12 +1,12 @@
 package com.ianlibanio.voidcommand.controller.impl;
 
 import com.google.common.collect.Maps;
-import com.ianlibanio.voidcommand.controller.IMapController;
+import com.ianlibanio.voidcommand.controller.ISubCommandController;
 import com.ianlibanio.voidcommand.data.Sub;
 
 import java.util.Map;
 
-public class ValidSubCommandsController implements IMapController<String, Sub> {
+public class ValidSubCommandsControllerImpl implements ISubCommandController<String, Sub> {
 
     private final Map<String, Sub> subCommandMethodMap = Maps.newHashMap();
 
