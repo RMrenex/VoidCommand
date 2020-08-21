@@ -14,18 +14,16 @@ You can download the .jar into the [releases page](http://github.com/ianlibanio/
 
 Add it at your root `build.gradle` at the end of repositories:
 ```gradle
-
 repositories {
 	...
 	maven { url 'https://jitpack.io' }
 }
-
 ```
 Add the `dependency`:
 ```gradle
-	dependencies {
-		implementation 'com.github.ianlibanio:VoidCommand:0.1'
-	}
+dependencies {
+	implementation 'com.github.ianlibanio:VoidCommand:1.2'
+}
 ```
 
 ### Maven
@@ -41,13 +39,13 @@ Add the JitPack repository to your `build` file:
 Add the `dependency`:
 ```xml
 <dependency>
-	<groupId>com.github.User</groupId>
-	<artifactId>Repo</artifactId>
-	version>Tag</version>
+	<groupId>com.github.ianlibanio</groupId>
+	<artifactId>VoidCommand</artifactId>
+	<version>1.2</version>
 </dependency>
 ```
 
-Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand>.
+Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand/1.2>.
 
 ## Usage example
 
