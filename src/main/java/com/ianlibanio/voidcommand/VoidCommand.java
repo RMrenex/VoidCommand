@@ -26,11 +26,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class VoidCommand extends org.bukkit.command.Command {
 
-    private final IMapController<String, Sub> controller = new SubCommandController();
-    private final IMapController<String, Sub> validController = new ValidSubCommandsController();
-
     private Player player;
     private Command command;
+
+    private final IMapController<String, Sub> controller = new SubCommandController();
+    private final IMapController<String, Sub> validController = new ValidSubCommandsController();
 
     public VoidCommand() {
         super("");
@@ -40,7 +40,7 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             val command = method.getAnnotation(Command.class);
             val aliases = method.getAnnotation(Aliases.class);
 
-            if (command != null) {
+            if (this.command == null && command != null) {
                 this.command = command;
                 setName(command.name());
             }
@@ -99,13 +99,13 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
                         }
                     }
 
-                    if (hasPermission(sender, command.permission()) && hasPermission(sender, sub.getSubCommand().permission())) {
+                    if (hasPermission(sender, sub.getSubCommand().permission())) {
                         validController.put(name, sub);
                     }
                 }
             });
 
-            Map<String, Sub> valid = validController.get();
+            val valid = validController.get();
 
             if (valid.size() == 1) {
                 valid.values().forEach(sub -> invoke(sub.getMethod(), sender, label, args));
@@ -125,17 +125,15 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             }
         }
 
-        val execute = use.get();
-
-        if (execute) {
+        if (use.get()) {
             command(new Context(sender, label, args, player));
         }
-        if (!execute && validController.get().equals(Collections.emptyMap())) {
+
+        if (!use.get() && validController.get().equals(Collections.emptyMap())) {
             sender.sendMessage(ChatColor.RED + command.invalid());
         }
 
         validController.clear();
-
         return false;
     }
 
