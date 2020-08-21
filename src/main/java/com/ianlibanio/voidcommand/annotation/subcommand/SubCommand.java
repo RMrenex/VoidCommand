@@ -1,5 +1,7 @@
 package com.ianlibanio.voidcommand.annotation.subcommand;
 
+import com.ianlibanio.voidcommand.settings.Executor;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,5 +13,7 @@ public @interface SubCommand {
 
     String name();
     String permission() default "";
+
+    Executor executor() default Executor.BOTH;
 
 }
