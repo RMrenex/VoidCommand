@@ -87,7 +87,7 @@ Remember that this annotation is optional.
 
 To create Sub Commands, you have to just create a void method with Context as the first param:
 ```java
-@SubCommand(name = "hello", permission = "test.hello.permission")
+@SubCommand(name = "hello", permission = "test.hello.permission", executor = Executor.PLAYER_ONLY)
 public void help(Context context) {
     context.message(ChatColor.RED + "Hello!");
 }
@@ -96,6 +96,7 @@ public void help(Context context) {
 Into @SubCommand you can use the following arguments:
 ```java
 name ('required') ["Your subcommand name, any String is valid. For multiple subcommands, like /test first second, you must separate with dots, in this case it would be first.second"]
+executor ('optional', default: "Executor.BOTH") ["Who can use this command, values: PLAYER_ONLY, CONSOLE_ONLY, BOTH"]
 permission ('optional', default: "") ["Permission required to execute this subcommand, any String is valid"]
 ```
 
