@@ -22,7 +22,7 @@ repositories {
 Add the `dependency`:
 ```gradle
 dependencies {
-	implementation 'com.github.ianlibanio:VoidCommand:1.2.1'
+	implementation 'com.github.ianlibanio:VoidCommand:1.2.2'
 }
 ```
 
@@ -41,11 +41,11 @@ Add the `dependency`:
 <dependency>
 	<groupId>com.github.ianlibanio</groupId>
 	<artifactId>VoidCommand</artifactId>
-	<version>1.2.1</version>
+	<version>1.2.2</version>
 </dependency>
 ```
 
-Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand/1.2>.
+Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand/1.2.2>.
 
 ## Usage example
 
