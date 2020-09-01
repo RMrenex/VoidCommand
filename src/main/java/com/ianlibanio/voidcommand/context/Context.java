@@ -1,5 +1,7 @@
 package com.ianlibanio.voidcommand.context;
 
+import com.ianlibanio.voidcommand.annotation.command.Command;
+import com.ianlibanio.voidcommand.annotation.subcommand.SubCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -18,5 +20,7 @@ public class Context {
 
     // Add-ons
     private final Player player;
+    private final Command command;
+    private final SubCommand subCommand;
 
 }

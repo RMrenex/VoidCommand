@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class   VoidCommand extends org.bukkit.command.Command {
+public abstract class VoidCommand extends org.bukkit.command.Command {
 
     private Player player;
     private Command command;
@@ -108,7 +108,7 @@ public abstract class   VoidCommand extends org.bukkit.command.Command {
             val valid = validController.get();
 
             if (valid.size() == 1) {
-                valid.values().forEach(sub -> invoke(sub.getMethod(), sub.getSubCommand().executor(), sender, label, args));
+                valid.values().forEach(sub -> invoke(sub.getMethod(), sub.getSubCommand().executor(), sender, label, args, sub.getSubCommand()));
                 use.set(false);
             }
 
@@ -122,13 +122,13 @@ public abstract class   VoidCommand extends org.bukkit.command.Command {
 
                 val sub = max.get().getValue();
 
-                invoke(sub.getMethod(), sub.getSubCommand().executor(), sender, label, args);
+                invoke(sub.getMethod(), sub.getSubCommand().executor(), sender, label, args, sub.getSubCommand());
                 use.set(false);
             }
         }
 
         if (use.get()) {
-            command(new Context(sender, label, args, player));
+            command(new Context(sender, label, args, player, command, null));
         }
 
         if (!use.get() && validController.get().equals(Collections.emptyMap())) {
@@ -150,7 +150,7 @@ public abstract class   VoidCommand extends org.bukkit.command.Command {
     }
 
     @SneakyThrows
-    private void invoke(Method method, Executor executor, CommandSender sender, String label, String[] args) {
+    private void invoke(Method method, Executor executor, CommandSender sender, String label, String[] args, SubCommand subCommand) {
         if (executor.equals(Executor.PLAYER_ONLY) && !isPlayer(sender)) {
             sender.sendMessage(ChatColor.GRAY + "You can't use this command in the " + ChatColor.RED + "CONSOLE" + ChatColor.GRAY + ".");
             return;
@@ -161,6 +161,6 @@ public abstract class   VoidCommand extends org.bukkit.command.Command {
             return;
         }
 
-        method.invoke(this, new Context(sender, label, args, player));
+        method.invoke(this, new Context(sender, label, args, player, command, subCommand));
     }
 }
