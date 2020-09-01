@@ -13,7 +13,7 @@ public @interface Command {
 
     String name();
     String permission() default "";
-    String invalid() default "You used an invalid sub command.";
+    String[] invalid() default {"You used an invalid sub command."};
 
     Executor executor() default Executor.BOTH;
 

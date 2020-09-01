@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class VoidCommand extends org.bukkit.command.Command {
+public abstract class   VoidCommand extends org.bukkit.command.Command {
 
     private Player player;
     private Command command;
@@ -132,7 +132,9 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
         }
 
         if (!use.get() && validController.get().equals(Collections.emptyMap())) {
-            sender.sendMessage(ChatColor.RED + command.invalid());
+            for (final String invalid : command.invalid()) {
+                sender.sendMessage(ChatColor.RED + invalid);
+            }
         }
 
         validController.clear();

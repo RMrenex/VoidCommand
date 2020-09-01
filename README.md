@@ -22,7 +22,7 @@ repositories {
 Add the `dependency`:
 ```gradle
 dependencies {
-	implementation 'com.github.ianlibanio:VoidCommand:1.2'
+	implementation 'com.github.ianlibanio:VoidCommand:1.2.1'
 }
 ```
 
@@ -41,7 +41,7 @@ Add the `dependency`:
 <dependency>
 	<groupId>com.github.ianlibanio</groupId>
 	<artifactId>VoidCommand</artifactId>
-	<version>1.2</version>
+	<version>1.2.1</version>
 </dependency>
 ```
 
@@ -50,7 +50,7 @@ Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand/1.2>.
 ## Usage example
 
 ### Commands
-Firstly, to create a command you must create an class and extend VoidCommand:
+Firstly, to create a command you must create a class and extend VoidCommand:
 
 ```java
 public class Example extends VoidCommand {}
@@ -61,7 +61,7 @@ Then implement the command() method and annotate it with @Command and @Aliases (
 ```java
 public class TestCommand extends VoidCommand {
 
-    @Command(name = "test", executor = Executor.PLAYER_ONLY, permission = "test.permission", invalid = "Invalid Sub Command!")
+    @Command(name = "test", executor = Executor.PLAYER_ONLY, permission = "test.permission", invalid = {"Invalid Sub Command!"})
     @Aliases({"test1", "test2"})
     public void command(Context context) {
         context.player().sendMessage(ChatColor.RED + "Test!");
@@ -74,7 +74,7 @@ Into @Command you can use the following arguments:
 name ('required') ["Your command name, any String is valid"]
 executor ('optional', default: "Executor.BOTH") ["Who can use this command, values: PLAYER_ONLY, CONSOLE_ONLY, BOTH"]
 permission ('optional', default: "") ["Permission required to execute this command, any String is valid"]
-invalid ('optional', default: "You used an invalid sub command.") ["Which message will appear if the SubCommand is not valid"]
+invalid ('optional', default: {"You used an invalid sub command."}) ["Which message will appear if the SubCommand is not valid"]
 ```
 
 Into @Aliases you can use the following arguments:
