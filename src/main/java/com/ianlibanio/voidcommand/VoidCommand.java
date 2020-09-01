@@ -133,7 +133,7 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
 
         if (!use.get() && validController.get().equals(Collections.emptyMap())) {
             for (final String invalid : command.invalid()) {
-                sender.sendMessage(ChatColor.RED + invalid);
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalid));
             }
         }
 

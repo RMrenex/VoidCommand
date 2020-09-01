@@ -5,6 +5,7 @@ import com.ianlibanio.voidcommand.annotation.subcommand.SubCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,5 +23,11 @@ public class Context {
     private final Player player;
     private final Command command;
     private final SubCommand subCommand;
+
+    public void sendInvalidMessage() {
+        for (String message : command.invalid()) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+        }
+    }
 
 }
