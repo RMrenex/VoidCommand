@@ -64,7 +64,7 @@ public class TestCommand extends VoidCommand {
     @Command(name = "test", executor = Executor.PLAYER_ONLY, permission = "test.permission", invalid = "Invalid Sub Command!")
     @Aliases({"test1", "test2"})
     public void command(Context context) {
-        context.message(ChatColor.RED + "Test!");
+        context.player().sendMessage(ChatColor.RED + "Test!");
     }
 }
 ```
@@ -89,7 +89,7 @@ To create Sub Commands, you have to just create a void method with Context as th
 ```java
 @SubCommand(name = "hello", permission = "test.hello.permission", executor = Executor.PLAYER_ONLY)
 public void help(Context context) {
-    context.message(ChatColor.RED + "Hello!");
+    context.player().sendMessage(ChatColor.RED + "Hello!");
 }
 ```
 
@@ -105,12 +105,12 @@ Remember that you can use multiple SubCommands with the same start:
 ```java
 @SubCommand(name = "use", permission = "test.use")
 public void use(Context context) {
-      context.message(ChatColor.GREEN + "You used a valid sub command!");
+      context.player().sendMessage(ChatColor.GREEN + "You used a valid sub command!");
 }
 
 @SubCommand(name = "use.secret", permission = "test.use.secret")
 public void useSecret(Context context) {
-     context.message(ChatColor.YELLOW + "You found a secret!");
+     context.player().sendMessage(ChatColor.YELLOW + "You found a secret!");
 }
 ```
 
