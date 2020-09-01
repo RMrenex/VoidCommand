@@ -45,7 +45,7 @@ Add the `dependency`:
 </dependency>
 ```
 
-Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand/1.2>.
+Other options available at: <https://jitpack.io/#ianlibanio/VoidCommand/1.2.1>.
 
 ## Usage example
 
