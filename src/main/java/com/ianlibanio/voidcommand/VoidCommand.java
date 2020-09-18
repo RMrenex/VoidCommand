@@ -88,13 +88,13 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
                     val split = name.split("\\.");
 
                     if (split.length == 0 || args[0].equals("") || args.length < split.length) {
-                        use.set(false);
+                        use.set(true);
                         return;
                     }
 
                     for (int i = 0; i < split.length; i++) {
                         if (!args[i].equalsIgnoreCase(split[i])) {
-                            use.set(false);
+                            use.set(true);
                             return;
                         }
                     }
