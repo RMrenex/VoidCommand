@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 public @interface Command {
 
     String name();
+    String description() default "";
+    String usage() default "";
     String permission() default "";
     String[] invalid() default {"You used an invalid sub command."};
 

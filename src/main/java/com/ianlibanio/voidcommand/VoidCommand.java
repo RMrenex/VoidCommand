@@ -43,6 +43,8 @@ public abstract class VoidCommand extends org.bukkit.command.Command {
             if (this.command == null && command != null) {
                 this.command = command;
                 setName(command.name());
+                setDescription(command.description());
+                setUsage(command.usage());
             }
 
             if (aliases != null) setAliases(Arrays.asList(aliases.value()));
